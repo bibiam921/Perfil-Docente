@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docente · Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Orbitron:wght@700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: #060a12;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Inter', sans-serif;
+    overflow: hidden;
+  }
+
+  .bg-grid {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(0,180,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,180,255,0.035) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .glow-orb {
+    position: fixed;
+    width: 900px; height: 900px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,100,255,0.12) 0%, transparent 70%);
+    top: -150px; left: -150px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .glow-orb2 {
+    position: fixed;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,220,255,0.08) 0%, transparent 70%);
+    bottom: -100px; right: -100px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 660px;
+    background: rgba(8, 15, 30, 0.97);
+    border: 1px solid rgba(0, 150, 255, 0.28);
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow:
+      0 0 0 1px rgba(0,100,255,0.1),
+      0 24px 100px rgba(0,100,255,0.22),
+      inset 0 1px 0 rgba(255,255,255,0.06);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .scan-bar {
+    height: 4px;
+    background: linear-gradient(90deg, transparent, #0064ff, #00d4ff, #0064ff, transparent);
+    background-size: 200% 100%;
+    animation: scan 3s linear infinite;
+  }
+  @keyframes scan { to { background-position: 200% 0; } }
+
+  .corner {
+    position: absolute;
+    width: 22px; height: 22px;
+    z-index: 3;
+  }
+  .corner::before, .corner::after { content: ''; position: absolute; background: #00aaff; }
+  .corner::before { width: 100%; height: 2px; top: 0; }
+  .corner::after { width: 2px; height: 100%; top: 0; }
+  .corner.tl { top: 12px; left: 12px; }
+  .corner.tr { top: 12px; right: 12px; transform: scaleX(-1); }
+  .corner.bl { bottom: 12px; left: 12px; transform: scaleY(-1); }
+  .corner.br { bottom: 12px; right: 12px; transform: scale(-1); }
+
+  /* Header */
+  .header {
+    padding: 34px 44px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .modal-icon {
+    width: 52px; height: 52px;
+    border: 1px solid rgba(0,180,255,0.4);
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    background: rgba(0,100,255,0.12);
+    font-size: 1.6rem;
+  }
+  .header-text { flex: 1; }
+  .modal-label {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 4px;
+    color: #00aaff;
+    text-transform: uppercase;
+  }
+  .modal-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #e0f0ff;
+    margin-top: 4px;
+  }
+  .status-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: #00ff88;
+    box-shadow: 0 0 10px #00ff88;
+    animation: blink 2s ease-in-out infinite;
+  }
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+  }
+
+  .divider {
+    height: 1px;
+    margin: 0 44px;
+    background: linear-gradient(90deg, transparent, rgba(0,150,255,0.4), transparent);
+  }
+
+  /* Photo section */
+  .photo-section {
+    padding: 40px 44px 30px;
+    display: flex;
+    gap: 36px;
+    align-items: center;
+  }
+
+  .photo-wrapper {
+    position: relative;
+    flex-shrink: 0;
+  }
+  .photo-ring {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    position: relative;
+  }
+  .photo-ring::before {
+    content: '';
+    position: absolute;
+    inset: -4px;
+    border-radius: 50%;
+    background: conic-gradient(#0064ff 0deg, #00d4ff 120deg, transparent 200deg, #0064ff 360deg);
+    animation: spinRing 5s linear infinite;
+    z-index: 0;
+  }
+  @keyframes spinRing { to { transform: rotate(360deg); } }
+  .photo-ring::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: #060a12;
+    z-index: 0;
+  }
+  .photo-inner {
+    position: relative;
+    z-index: 1;
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    background: #0a1525;
+    border: 2px solid rgba(0,100,255,0.3);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .photo-inner img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .photo-placeholder-icon {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: rgba(0,150,255,0.35);
+  }
+  .photo-placeholder-icon svg { width: 54px; height: 54px; }
+  .photo-placeholder-icon span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 3px;
+    color: rgba(0,150,255,0.3);
+  }
+
+  .id-tag {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    justify-content: center;
+  }
+  .id-tag span {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.6rem;
+    color: rgba(0,180,255,0.45);
+    letter-spacing: 2px;
+  }
+  .id-tag .line { flex: 1; height: 1px; background: rgba(0,180,255,0.18); }
+
+  /* Info */
+  .info {
+    flex: 1;
+  }
+  .info-tag {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.7rem;
+    color: #0088cc;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .name {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: #ddeeff;
+    line-height: 1.35;
+    margin-bottom: 20px;
+  }
+  .profession-label {
+    font-size: 0.65rem;
+    color: #446;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 7px;
+    font-family: 'Share Tech Mono', monospace;
+  }
+  .profession {
+    font-size: 0.95rem;
+    color: #7ab0d4;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .data-bars {
+    display: flex;
+    gap: 5px;
+    margin-top: 20px;
+  }
+  .bar {
+    height: 4px;
+    border-radius: 99px;
+    background: rgba(0,100,255,0.3);
+    animation: barPulse 2s ease-in-out infinite;
+  }
+  .bar:nth-child(1) { width: 38px; animation-delay: 0s; }
+  .bar:nth-child(2) { width: 22px; animation-delay: 0.2s; background: rgba(0,200,255,0.4); }
+  .bar:nth-child(3) { width: 30px; animation-delay: 0.4s; }
+  .bar:nth-child(4) { width: 15px; animation-delay: 0.6s; background: rgba(0,200,255,0.4); }
+  @keyframes barPulse {
+    0%,100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  /* Footer */
+  .footer {
+    margin: 0 44px 34px;
+    padding-top: 22px;
+    border-top: 1px solid rgba(0,100,255,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer-code {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: rgba(0,150,255,0.3);
+    letter-spacing: 2px;
+  }
+  .footer-badge {
+    background: rgba(0,100,255,0.12);
+    border: 1px solid rgba(0,150,255,0.25);
+    border-radius: 7px;
+    padding: 6px 14px;
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 0.65rem;
+    color: #0088cc;
+    letter-spacing: 3px;
+  }
+</style>
+</head>
+<body>
+<div class="bg-grid"></div>
+<div class="glow-orb"></div>
+<div class="glow-orb2"></div>
+
+<div class="card">
+  <div class="scan-bar"></div>
+  <div class="corner tl"></div>
+  <div class="corner tr"></div>
+  <div class="corner bl"></div>
+  <div class="corner br"></div>
+
+  <div class="header">
+    <div class="modal-icon">💻</div>
+    <div class="header-text">
+      <div class="modal-label">Media Técnica</div>
+      <div class="modal-title">Técnico en Sistemas</div>
+    </div>
+    <div class="status-dot"></div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="photo-section">
+    <div class="photo-wrapper">
+      <div class="photo-ring">
+        <div class="photo-inner">
+          <div class="photo-ring">
+  <div class="photo-inner">
+    <img src="img/bibi3.jpeg" alt="Bibiana Enciso">
+  </div>
+</div>
+        </div>
+      </div>
+      <div class="id-tag">
+        <div class="line"></div>
+        <span>ID·DOC</span>
+        <div class="line"></div>
+      </div>
+    </div>
+
+    <div class="info">
+      <div class="info-tag">// Docente</div>
+      <div class="name">Bibiana Andrea<br>Enciso Cañas</div>
+      <div class="profession-label">Perfil académico</div>
+      <div class="profession">
+        Ingeniera en Sistemas<br>
+        Magíster en Ingeniería de Software<br>y Sistemas Informáticos
+      </div>
+      <div class="data-bars">
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+        <div class="bar"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <span class="footer-code">SYS·DOCENTE·2026</span>
+    <span class="footer-badge">ACTIVO</span>
+  </div>
+</div>
+</body>
+</html>
