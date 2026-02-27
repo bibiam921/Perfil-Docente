@@ -109,21 +109,21 @@
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.75rem;
     letter-spacing: 4px;
-    color: #00aaff;
+    color: rgb(0, 255, 238);
     text-transform: uppercase;
   }
   .modal-title {
-    font-family: 'Orbitron', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.25rem;
     font-weight: 700;
-    color: #e0f0ff;
+    color: #65e1e7;
     margin-top: 4px;
   }
   .status-dot {
     width: 10px; height: 10px;
     border-radius: 50%;
     background: #00ff88;
-    box-shadow: 0 0 10px #00ff88;
+    box-shadow: 0 0 10px #0ce0ec;
     animation: blink 2s ease-in-out infinite;
   }
   @keyframes blink {
@@ -134,14 +134,14 @@
   .divider {
     height: 1px;
     margin: 0 44px;
-    background: linear-gradient(90deg, transparent, rgba(0,150,255,0.4), transparent);
+    background: linear-gradient(90deg, transparent, rgba(20, 103, 163, 0.7), transparent);
   }
 
   /* Photo section */
   .photo-section {
-    padding: 40px 44px 30px;
+    padding: 60px 46px 35px;
     display: flex;
-    gap: 36px;
+    gap: 38px;
     align-items: center;
   }
 
@@ -159,7 +159,7 @@
     position: absolute;
     inset: -4px;
     border-radius: 50%;
-    background: conic-gradient(#0064ff 0deg, #00d4ff 120deg, transparent 200deg, #0064ff 360deg);
+    background: conic-gradient(#93f150 0deg, #00d4ff 120deg, transparent 200deg, #57aae1c4 360deg);
     animation: spinRing 5s linear infinite;
     z-index: 0;
   }
@@ -169,7 +169,7 @@
     position: absolute;
     inset: -1px;
     border-radius: 50%;
-    background: #060a12;
+    background: #567cc9;
     z-index: 0;
   }
   .photo-inner {
@@ -178,7 +178,7 @@
     width: 180px; height: 180px;
     border-radius: 50%;
     background: #0a1525;
-    border: 2px solid rgba(0,100,255,0.3);
+    border: 2px solid rgba(23, 170, 181, 0.3);
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -193,14 +193,14 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    color: rgba(0,150,255,0.35);
+    color: rgba(45, 224, 224, 0.35);
   }
   .photo-placeholder-icon svg { width: 54px; height: 54px; }
   .photo-placeholder-icon span {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.65rem;
     letter-spacing: 3px;
-    color: rgba(0,150,255,0.3);
+    color: rgba(35, 112, 129, 0.3);
   }
 
   .id-tag {
@@ -213,10 +213,10 @@
   .id-tag span {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.6rem;
-    color: rgba(0,180,255,0.45);
+    color: rgba(27, 206, 197, 0.45);
     letter-spacing: 2px;
   }
-  .id-tag .line { flex: 1; height: 1px; background: rgba(0,180,255,0.18); }
+  .id-tag .line { flex: 1; height: 1px; background: rgba(43, 243, 229, 0.18); }
 
   /* Info */
   .info {
@@ -224,14 +224,14 @@
   }
   .info-tag {
     font-family: 'Share Tech Mono', monospace;
-    font-size: 0.7rem;
-    color: #0088cc;
+    font-size: 0.8rem;
+    color: #19efe0;
     letter-spacing: 3px;
     text-transform: uppercase;
     margin-bottom: 12px;
   }
   .name {
-    font-family: 'Orbitron', sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     font-size: 1.35rem;
     font-weight: 700;
     color: #ddeeff;
@@ -240,7 +240,7 @@
   }
   .profession-label {
     font-size: 0.65rem;
-    color: #446;
+    color: rgb(74, 162, 62);
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 7px;
@@ -248,7 +248,7 @@
   }
   .profession {
     font-size: 0.95rem;
-    color: #7ab0d4;
+    color: #37f1f1;
     line-height: 1.75;
     font-weight: 300;
   }
@@ -261,13 +261,13 @@
   .bar {
     height: 4px;
     border-radius: 99px;
-    background: rgba(0,100,255,0.3);
+    background: rgba(12, 145, 145, 0.892);
     animation: barPulse 2s ease-in-out infinite;
   }
   .bar:nth-child(1) { width: 38px; animation-delay: 0s; }
-  .bar:nth-child(2) { width: 22px; animation-delay: 0.2s; background: rgba(0,200,255,0.4); }
+  .bar:nth-child(2) { width: 22px; animation-delay: 0.2s; background: rgba(161, 249, 62, 0.4); }
   .bar:nth-child(3) { width: 30px; animation-delay: 0.4s; }
-  .bar:nth-child(4) { width: 15px; animation-delay: 0.6s; background: rgba(0,200,255,0.4); }
+  .bar:nth-child(4) { width: 15px; animation-delay: 0.6s; background: rgba(248, 133, 245, 0.4); }
   @keyframes barPulse {
     0%,100% { opacity: 0.4; }
     50% { opacity: 1; }
@@ -277,7 +277,7 @@
   .footer {
     margin: 0 44px 34px;
     padding-top: 22px;
-    border-top: 1px solid rgba(0,100,255,0.15);
+    border-top: 1px solid rgba(108, 228, 239, 0.15);
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -285,17 +285,17 @@
   .footer-code {
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.65rem;
-    color: rgba(0,150,255,0.3);
+    color: rgba(84, 224, 237, 0.3);
     letter-spacing: 2px;
   }
   .footer-badge {
-    background: rgba(0,100,255,0.12);
+    background: rgba(140, 218, 230, 0.12);
     border: 1px solid rgba(0,150,255,0.25);
     border-radius: 7px;
     padding: 6px 14px;
     font-family: 'Share Tech Mono', monospace;
     font-size: 0.65rem;
-    color: #0088cc;
+    color: #5de215;
     letter-spacing: 3px;
   }
 </style>
@@ -316,7 +316,7 @@
     <div class="modal-icon">💻</div>
     <div class="header-text">
       <div class="modal-label">Media Técnica</div>
-      <div class="modal-title">Técnico en Sistemas</div>
+      <div class="modal-title">Sistemas Teleinformáticos</div>
     </div>
     <div class="status-dot"></div>
   </div>
@@ -344,9 +344,9 @@
     <div class="info">
       <div class="info-tag">// Docente</div>
       <div class="name">Bibiana Andrea<br>Enciso Cañas</div>
-      <div class="profession-label">Perfil académico</div>
+      <div class="profession-label">Perfil Profesional</div>
       <div class="profession">
-        Ingeniera en Sistemas<br>
+        Ingeniera de Sistemas<br>
         Magíster en Ingeniería de Software<br>y Sistemas Informáticos
       </div>
       <div class="data-bars">
@@ -360,7 +360,7 @@
 
   <div class="footer">
     <span class="footer-code">SYS·DOCENTE·2026</span>
-    <span class="footer-badge">ACTIVO</span>
+    <span class="footer-badge">ACTIVA</span>
   </div>
 </div>
 </body>
