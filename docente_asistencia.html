@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Docente · Asistencia Administrativa</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600;700&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --purple-deep:    #1a0a2e;
+    --purple-mid:     #500e4b;
+    --purple-soft:    #6b3fa0;
+    --purple-light:   #f5e86e;
+    --purple-pale:    #f3eb57;
+    --purple-mist:    #81700e;
+    --gold:           #8d3d0b;
+    --gold-light:     #c47712;
+    --white:          #ba1092;
+    --white-dim:      rgba(143, 21, 121, 0.72);
+    --white-ghost:    rgba(125, 30, 144, 0.12);
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: #9e819a;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'DM Sans', sans-serif;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* Fondo decorativo */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 15% 20%, rgba(71, 160, 63, 0.13) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 50% at 85% 80%, rgba(168,120,224,0.10) 0%, transparent 55%),
+      #170518;
+    z-index: 0;
+  }
+
+  /* Patrón geométrico sutil */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(107,63,160,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(107,63,160,0.04) 1px, transparent 1px);
+    background-size: 52px 52px;
+    z-index: 0;
+  }
+
+  /* ── CARD ── */
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 640px;
+    background: var(--white);
+    border-radius: 28px;
+    overflow: hidden;
+    box-shadow:
+      0 2px 0 rgba(107,63,160,0.12),
+      0 20px 80px rgba(45,17,86,0.18),
+      0 4px 24px rgba(107,63,160,0.10);
+    animation: rise 0.7s cubic-bezier(0.22,1,0.36,1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(24px) scale(0.98); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  /* Banda superior decorativa */
+  .top-band {
+    height: 6px;
+    background: linear-gradient(90deg, var(--purple-mid), var(--purple-soft), var(--gold), var(--purple-light));
+    background-size: 200% 100%;
+    animation: flow 5s linear infinite;
+  }
+  @keyframes flow { to { background-position: 200% 0; } }
+
+  /* Header */
+  .header {
+    background: var(--purple-deep);
+    padding: 28px 40px 26px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    right: -40px; top: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(168,120,224,0.2) 0%, transparent 70%);
+  }
+  .header-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    background: rgba(168,120,224,0.18);
+    border: 1px solid rgba(168,120,224,0.35);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.8rem;
+    flex-shrink: 0;
+  }
+  .header-text { flex: 1; }
+  .header-eyebrow {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.69rem;
+    letter-spacing: 3.5px;
+    color: var(--purple-pale);
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+  .header-title {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--white);
+    margin-top: 3px;
+    letter-spacing: 0.3px;
+  }
+  .status-chip {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    background: rgba(197, 100, 188, 0.15);
+    border: 3px solid rgba(201,168,76,0.35);
+    border-radius: 99px;
+    padding: 5px 13px;
+  }
+  .status-dot {
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--gold-light);
+    animation: pulse 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,201,122,0.4); }
+    50% { opacity: 0.5; box-shadow: 0 0 0 4px rgba(9, 102, 15, 0); }
+  }
+  .status-text {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    text-transform: uppercase;
+  }
+
+  /* Body */
+  .body {
+    padding: 38px 40px 32px;
+    display: flex;
+    gap: 36px;
+    align-items: flex-start;
+    background-color: #9e819a;
+  }
+
+  /* Foto */
+  .photo-col { flex-shrink: 0; display: flex; flex-direction: column; align-items: center; gap: 14px; }
+
+  .photo-frame {
+    position: relative;
+    width: 156px; height: 156px;
+  }
+  .photo-frame::before {
+    content: '';
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+    background: conic-gradient(var(--gold) 0deg, var(--purple-light) 110deg, var(--purple-pale) 200deg, var(--gold) 360deg);
+    animation: spin 7s linear infinite;
+    z-index: 0;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .photo-frame::after {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: 50%;
+    background: var(--white);
+    z-index: 1;
+  }
+  .photo-circle {
+    position: relative;
+    z-index: 2;
+    width: 156px; height: 156px;
+    border-radius: 50%;
+    overflow: hidden;
+    background: var(--purple-mist);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .photo-circle img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+  }
+  .photo-placeholder {
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    color: var(--purple-soft);
+    opacity: 0.4;
+  }
+  .photo-placeholder svg { width: 48px; height: 48px; }
+  .photo-placeholder span {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.57rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .id-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+  .id-line { flex: 1; height: 1px; background: rgba(107,63,160,0.15); }
+  .id-label {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.57rem;
+    letter-spacing: 2.5px;
+    color: var(--purple-soft);
+    opacity: 0.55;
+    text-transform: uppercase;
+  }
+
+  /* Info */
+  .info-col { flex: 1; padding-top: 4px; }
+
+  .info-tag {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 0.69rem;
+    color: var(--purple-soft);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 10px;
+  }
+
+  .name {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-size: 1.9rem;
+    font-weight: 700;
+    color: var(--purple-deep);
+    line-height: 1.18;
+    margin-bottom: 22px;
+  }
+
+  .field { margin-bottom: 16px; }
+  .field-label {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.58rem;
+    letter-spacing: 2.5px;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  .field-value {
+    font-size: 0.88rem;
+    color: #3a1f60;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+
+  /* Barra de acento decorativa */
+  .accent-bar {
+    margin-top: 22px;
+    display: flex;
+    gap: 4px;
+    align-items: flex-end;
+  }
+  .accent-seg {
+    height: 3px;
+    border-radius: 99px;
+    animation: segPulse 2.5s ease-in-out infinite;
+  }
+  .accent-seg:nth-child(1) { width: 42px; background: var(--purple-soft); animation-delay: 0s; }
+  .accent-seg:nth-child(2) { width: 18px; background: var(--gold); animation-delay: 0.3s; }
+  .accent-seg:nth-child(3) { width: 28px; background: var(--purple-light); animation-delay: 0.6s; }
+  .accent-seg:nth-child(4) { width: 10px; background: var(--gold-light); animation-delay: 0.9s; }
+  @keyframes segPulse {
+    0%,100% { opacity: 0.3; }
+    50%      { opacity: 1; }
+  }
+
+  /* Separador */
+  .divider {
+    height: 1px;
+    margin: 0 40px;
+    background: linear-gradient(90deg, transparent, rgba(107,63,160,0.15), rgba(201,168,76,0.2), rgba(107,63,160,0.15), transparent);
+  }
+
+  /* Footer */
+  .footer {
+    padding: 18px 40px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #d17ac5;
+  }
+  .footer-code {
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 0.6rem;
+    color: rgba(107,63,160,0.35);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .footer-badge {
+    background: linear-gradient(135deg, var(--purple-mid), var(--purple-soft));
+    border-radius: 8px;
+    padding: 7px 16px;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--purple-pale);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    box-shadow: 0 2px 12px rgba(45,17,86,0.25);
+  }
+
+  /* Ornamento esquina inferior derecha */
+  .ornament {
+    position: absolute;
+    bottom: 18px;
+    right: 40px;
+    width: 14px; height: 14px;
+    border-right: 2px solid rgba(201,168,76,0.4);
+    border-bottom: 2px solid rgba(201,168,76,0.4);
+    border-radius: 0 0 4px 0;
+  }
+  .ornament-tl {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    width: 14px; height: 14px;
+    border-left: 2px solid rgba(201,168,76,0.5);
+    border-top: 2px solid rgba(201,168,76,0.5);
+    border-radius: 4px 0 0 0;
+    margin-top: 84px; /* debajo del header */
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="top-band"></div>
+
+  <div class="header">
+    <div class="header-icon">📋</div>
+    <div class="header-text">
+      <div class="header-eyebrow">Media Técnica</div>
+      <div class="header-title">Asistencia Administrativa</div>
+    </div>
+    <div class="status-chip">
+      <div class="status-dot"></div>
+      <span class="status-text">Activa</span>
+    </div>
+  </div>
+
+  <div class="body">
+    <div class="photo-col">
+      <div class="photo-frame">
+        <div class="photo-circle">
+          <img src="eliza.jpeg" alt="Elizabeth Escobar"
+               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <div class="photo-placeholder" style="display:none;">
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="24" cy="17" r="8"/>
+              <path d="M6 40c0-9 8-16 18-16s18 7 18 16"/>
+            </svg>
+            <span>Foto</span>
+          </div>
+        </div>
+      </div>
+      <div class="id-strip">
+        <div class="id-line"></div>
+        <span class="id-label" style="color: rgb(255, 0, 115);">ID · Doc</span>
+        <div class="id-line"></div>
+      </div>
+    </div>
+
+    <div class="info-col">
+      <div class="info-tag">// Docente</div>
+      <div class="name">Elizabeth<br>Escobar Ángel</div>
+
+      <div class="field">
+        <div class="field-label">Perfil Profesional</div>
+        <div class="field-value">
+          Administradora de Empresas<br>
+          Especialista en Aplicación de TIC<br>para la Enseñanza<br>
+          Magíster en Gestión de<br>Tecnología Educativa
+        </div>
+      </div>
+
+      <div class="accent-bar">
+        <div class="accent-seg"></div>
+        <div class="accent-seg"></div>
+        <div class="accent-seg"></div>
+        <div class="accent-seg"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="divider"></div>
+
+  <div class="footer">
+    <span class="footer-code" style="color:#ba1092">ADM · DOCENTE · 2026</span>
+    <span class="footer-badge">Asistencia Adm.</span>
+    <div class="ornament"></div>
+  </div>
+</div>
+
+</body>
+</html>
